@@ -22,6 +22,7 @@ module.exports = class sanguine
 
 	optimize: (configpath) ->
 		@_loadConfig(configpath, (err) =>
+			if err then return log(err)
 			@_parse()
 		)
 		
@@ -52,21 +53,14 @@ module.exports = class sanguine
 		fs.readdir(source, (err, files) =>
 			_.each(files, (file, key) =>
 				src = path.join(source, file)
-				fs.stat(src, (err, stats) =>
-					if err then log(err)
-					if stats.isDirectory()
-						@_parseDirectory(src, path.join(target, file), set)
-					else if stats.isFile() and path.extname(src) is '.png'
-						fs.exists(target, (exists) =>
-							if exists
-								return @_parseFile(src, target, set)
-
-							fs.mkdir(target, null, (err) =>
-								if err then throw err
-								return @_parseFile(src, target, set)
-							)
-						)
-				)
+				stats = fs.statSync(src)
+				if err then log(err)
+				if stats.isDirectory()
+					@_parseDirectory(src, path.join(target, file), set)
+				else if stats.isFile() and path.extname(src) is '.png'
+					unless fs.existsSync(target)
+						fs.mkdirSync(target)
+					return @_parseFile(src, target, set)
 			)
 		)
 
@@ -90,14 +84,14 @@ module.exports = class sanguine
 			fileJpg = set.jpg
 
 		@filecount += fileColors.length + fileJpg.length
-
-		_.each(fileColors, (color) =>
-			@_optimizeFile(src, fileTarget, color, @_fileParsed)
-		)
-	
-		_.each(fileJpg, (quality) =>
-			@_jpgFile(src, fileTarget, quality, @_fileParsed)
-		)
+		if fileColors.length > 0
+			_.each(fileColors, (color) =>
+				@_optimizeFile(src, fileTarget, color, @_fileParsed)
+			)
+		if fileJpg.length > 0
+			_.each(fileJpg, (quality) =>
+				@_jpgFile(src, fileTarget, quality, @_fileParsed)
+			)
 
 	_fileParsed: (err, file) =>
 		if err then return log(err)
@@ -107,11 +101,12 @@ module.exports = class sanguine
 			@_cleanup()
 
 	_cleanup: ()=>
-		_.each(@cleanup, (file) =>
-			@_deleteFile(file, (err) =>
-				
+		if @cleanup.length > 0
+			_.each(@cleanup, (file) =>
+				@_deleteFile(file, (err) =>
+					
+				)
 			)
-		)
 
 	_getAllRegExp: (re, str) =>
 		arr = []

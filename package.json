@@ -1,7 +1,9 @@
 {
   "name": "sanguine",
+  "description": "A faster way of optimizing images for the interwebs.",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
+  "main": "./index",
   "author": {
     "name": "Knut Skaala",
     "email": "knut@apt.no"
@@ -13,5 +15,13 @@
   },
   "devDependencies": {
     "buddy": "~0.4.0"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "sanguine" : "./bin/sanguine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/superunrelated/sanguine.git"
   }
 }
