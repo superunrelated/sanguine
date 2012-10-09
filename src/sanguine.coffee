@@ -66,6 +66,7 @@ module.exports = class sanguine
 		)
 
 	_parseFile: (src, target, set) =>
+		@retinaRegexp.lastIndex = 0
 		if @retinaRegexp.test(src)
 			unretinaTarget = src.replace(@retinaRegexp, '-1x')
 			@_unretinaFile(src, unretinaTarget, (err) =>
