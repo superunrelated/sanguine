@@ -1,0 +1,8 @@
+[
+	{
+		"source" : "assets/",
+		"target" : "www/assets/images/",
+		"colorDefault" : 128,
+		"jpgDefault" : 60
+	}
+]

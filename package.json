@@ -1,0 +1,17 @@
+{
+  "name": "sanguine",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "Knut Skaala",
+    "email": "knut@apt.no"
+  },
+  "dependencies": {
+    "underscore": "~1.4.1",
+    "easyimage": "~0.1.3",
+    "commander": "~1.0.4"
+  },
+  "devDependencies": {
+    "buddy": "~0.4.0"
+  }
+}

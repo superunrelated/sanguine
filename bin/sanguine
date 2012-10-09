@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var sanguine = require('../lib/sanguine');
+
+var example = [
+	'',
+	'  Configuration:',
+	'',
+	'    Build sources and targets are defined in a "sanguine.json" config file',
+	'    that should be located in the root of your project directory:',
+	'',
+	'    [',
+	'      {',
+	'        "source" : "sanguine/",',
+	'        "target" : "www/assets/images/",',
+	'        "colors" : [128, 64],',
+	'        "jpg" : [60, 30]',
+	'      }',
+	'    ]',
+	'',
+	'  Setup:',
+	'',
+	'    File and folder structure of the source folder will be replicated ',
+	'    to target. Files tagged in with jpg or color marker will be optimized',
+	'    according to the tags and copied to the targer folder. Files with no',
+	'    tags will be optimized according to the default jpg and color settings',
+	'    in sanguine.json',
+	'',
+	'    - Images tagged "-x2" will be scaled down 50% and named "-1x".',
+	'    - Images tagged "-16c" will be redused to 16 colors.',
+	'    - Images tagged "-60j" will be compressed to 60% quality jpg.',
+	'    - Images with multiple tags like "gradient-2x-60j-128c.png" results in six files.'
+].join('\n');
+
+program.on('--help', function(){
+  console.log(example);
+});
+
+program
+	.command('* [config]')
+	.description('Create optimized images from source')
+	.action(function(config){
+		new sanguine().optimize(config);
+	});
+
+program.parse(process.argv);
