@@ -18,7 +18,8 @@ module.exports = class sanguine
 
 		@colorRegexp = /-(\d+)c/g
 		@jpgRegexp = /-(\d+)j/g
-		@unretinaRegexp = /-2x/g
+		@retinaTagRegexp = /(-1x)|(-2x)/g
+		@retinaRegexp = /-2x/g
 
 	optimize: (configpath) ->
 		@_loadConfig(configpath, (err) =>
@@ -65,8 +66,8 @@ module.exports = class sanguine
 		)
 
 	_parseFile: (src, target, set) =>
-		if @unretinaRegexp.test(src)
-			unretinaTarget = src.replace(@unretinaRegexp, '-1x')
+		if @retinaRegexp.test(src)
+			unretinaTarget = src.replace(@retinaRegexp, '-1x')
 			@_unretinaFile(src, unretinaTarget, (err) =>
 				if err then return 
 				@cleanup.push(unretinaTarget)
@@ -126,15 +127,15 @@ module.exports = class sanguine
 		)
 	
 	_jpgFile: (src, target, quality, fn) =>
+		target = @_createFilename(target, '-' + quality + 'j')
 		target = target.replace('.png', '.jpg')
-		target = target.replace('.', '-' + quality + 'j.')
 		easyimg.convert({src:src, dst:target, quality:quality}, (err, stdout, stderr) =>
 			if err then return fn(err)
 			fn(null, target)
 		)
 	
 	_optimizeFile: (src, target, colors, fn) =>
-		target = target.replace('.', '-' + colors + 'c.')
+		target = @_createFilename(target, '-' + colors + 'c')
 		@_duplicateFile(src, target, (err) =>
 			if err then return fn(err)
 			child = exec('pngquant --ext .png --force --speed 1 --verbose ' + colors + ' ' + target, (err, stdout, stderr) =>
@@ -143,6 +144,17 @@ module.exports = class sanguine
 			)
 		)
 	
+	_createFilename: (target, tag) =>
+		@retinaTagRegexp.lastIndex = 0
+		match = @retinaTagRegexp.exec(target)
+		if match?
+			type = match[0]
+			target = target.replace(type, tag + type)
+		else
+			target = target.replace('.', tag + '.')
+
+		target
+
 	_duplicateFile: (src, target, fn) =>
 		@_deleteFile(target, () =>
 			rs = fs.createReadStream(src)
