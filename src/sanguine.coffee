@@ -110,6 +110,7 @@ module.exports = class sanguine
 			)
 
 	_getAllRegExp: (re, str) =>
+		re.lastIndex = 0
 		arr = []
 		while (match = re.exec(str)) 
 			arr.push(parseInt(match[1]))
