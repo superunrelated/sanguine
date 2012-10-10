@@ -16,6 +16,7 @@ var example = [
 	'        "target" : "www/assets/images/",',
 	'        "colors" : [128, 64],',
 	'        "jpg" : [60, 30]',
+	'        "embelish" : false',
 	'      }',
 	'    ]',
 	'',
@@ -38,7 +39,7 @@ program.on('--help', function(){
 });
 
 program
-	.command('* [config]')
+	.command('* [config] [options]')
 	.description('Create optimized images from source')
 	.action(function(config){
 		new sanguine().optimize(config);

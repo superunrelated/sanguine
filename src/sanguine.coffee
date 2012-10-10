@@ -21,25 +21,24 @@ module.exports = class sanguine
 		@retinaTagRegexp = /(-1x)|(-2x)/g
 		@retinaRegexp = /-2x/g
 
-	optimize: (configpath) ->
-		@_loadConfig(configpath, (err) =>
+	optimize: (@configpath) ->
+		@_loadConfig((err) =>
 			if err then return log(err)
 			@_parse()
 		)
 		
-	_loadConfig: (configpath, fn) ->
-		if configpath.indexOf(CONFIG) is -1
-			configpath += CONFIG
-		configpath = path.normalize(configpath)
+	_loadConfig: (fn) ->
+		if @configpath.indexOf(CONFIG) is -1
+			@configpath += CONFIG
+		@configpath = path.normalize(@configpath)
 
-		fs.readFile(configpath, 'utf8', (err, data) =>
+		fs.readFile(@configpath, 'utf8', (err, data) =>
 			if err then return fn(new Error('Failed to load sanguine.json.'))
 			try
 				@config = JSON.parse(data)
 			catch err
 				if err then return fn(new Error('Failed to parse sanguine.json.'))
-			@configpath = configpath
-			@base = path.dirname(configpath)
+			@base = path.dirname(@configpath)
 			fn()
 		)
 
@@ -81,18 +80,19 @@ module.exports = class sanguine
 
 		fileColors = @_getAllRegExp(@colorRegexp, src)
 		fileJpg = @_getAllRegExp(@jpgRegexp, src)
-		if not fileColors? and not fileJpg?
+		if fileColors.length is 0 and fileJpg.length is 0 
 			fileColors = set.colors
 			fileJpg = set.jpg
 
 		@filecount += fileColors.length + fileJpg.length
 		if fileColors.length > 0
 			_.each(fileColors, (color) =>
-				@_optimizeFile(src, fileTarget, color, @_fileParsed)
+				@_optimizeFile(src, fileTarget, color, fileColors.length > 1 || set.embelish, @_fileParsed)
 			)
+
 		if fileJpg.length > 0
 			_.each(fileJpg, (quality) =>
-				@_jpgFile(src, fileTarget, quality, @_fileParsed)
+				@_jpgFile(src, fileTarget, quality, fileJpg.length > 1 || set.embelish, @_fileParsed)
 			)
 
 	_fileParsed: (err, file) =>
@@ -128,16 +128,16 @@ module.exports = class sanguine
 				)
 		)
 	
-	_jpgFile: (src, target, quality, fn) =>
-		target = @_createFilename(target, '-' + quality + 'j')
+	_jpgFile: (src, target, quality, embelish, fn) =>
+		if embelish then target = @_createFilename(target, '-' + quality + 'j')
 		target = target.replace('.png', '.jpg')
 		easyimg.convert({src:src, dst:target, quality:quality}, (err, stdout, stderr) =>
 			if err then return fn(err)
 			fn(null, target)
 		)
 	
-	_optimizeFile: (src, target, colors, fn) =>
-		target = @_createFilename(target, '-' + colors + 'c')
+	_optimizeFile: (src, target, colors, embelish, fn) =>
+		if embelish then target = @_createFilename(target, '-' + colors + 'c')
 		@_duplicateFile(src, target, (err) =>
 			if err then return fn(err)
 			child = exec('pngquant --ext .png --force --speed 1 --verbose ' + colors + ' ' + target, (err, stdout, stderr) =>
