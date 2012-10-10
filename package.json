@@ -1,7 +1,7 @@
 {
   "name": "sanguine",
-  "description": "A faster way of optimizing images for the interwebs.",
-  "version": "0.0.1",
+  "description": "An image build system for creating optimized png's, jpg's for normal and retina screens.",
+  "version": "0.0.2",
   "private": false,
   "main": "./index",
   "author": {
