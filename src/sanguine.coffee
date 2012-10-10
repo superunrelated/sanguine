@@ -154,7 +154,7 @@ module.exports = class sanguine
 
 		@_duplicateFile(src, target, (err) =>
 			if err then return fn(err)
-			child = exec('pngquant --ext .png --force --speed 1 --verbose ' + colors + ' ' + target, (err, stdout, stderr) =>
+			child = exec('pngquant -ext .png -force -speed 1 -verbose ' + colors + ' ' + target, (err, stdout, stderr) =>
 				if err? then fn(err)
 				fn(null, src, target)
 			)

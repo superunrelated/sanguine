@@ -4,6 +4,17 @@ An image build system for creating optimized png's, jpg's for normal and retina 
 
 ## Installation
 
+Install imagemagick
+```bash
+$ brew install imagemagick
+```
+
+Install pngquant
+```url
+http://www.libpng.org/pub/png/apps/pngquant.html
+```
+
+Then
 ```bash
 $ npm -g install sanguine
 ```
