@@ -2,6 +2,7 @@
 
 fs = require('fs')
 path = require('path')
+util = require('util')
 _ = require('underscore')
 exec = require('child_process').exec
 easyimg = require('easyimage')
@@ -22,6 +23,9 @@ module.exports = class sanguine
 		@retinaRegexp = /-2x/g
 
 	optimize: (@configpath) ->
+		unless @configpath?
+			@configpath = './'
+
 		@_loadConfig((err) =>
 			if err then return log(err)
 			@_parse()
@@ -95,10 +99,11 @@ module.exports = class sanguine
 				@_jpgFile(src, fileTarget, quality, fileJpg.length > 1 || set.embelish, @_fileParsed)
 			)
 
-	_fileParsed: (err, file) =>
+	_fileParsed: (err, src, target) =>
 		if err then return log(err)
+		@_syncTime(src, target)
 		@filecount--
-		log('Created file: ' + file)
+		log('Created target: ' + target)
 		if @filecount is 0
 			@_cleanup()
 
@@ -124,28 +129,49 @@ module.exports = class sanguine
 			th = parseInt(stdout.height * 0.5)
 			easyimg.resize({src:src, dst:target, width:tw, height:th}, (err, image) =>
 				if err then return fn(err)
-				return fn(null, image)
+				@_syncTime(src, target)
+				return fn(null, src, image)
 				)
 		)
 	
 	_jpgFile: (src, target, quality, embelish, fn) =>
 		if embelish then target = @_createFilename(target, '-' + quality + 'j')
 		target = target.replace('.png', '.jpg')
+
+		unless @_fileIsNew(src, target)
+			return fn(new Error('File is not modified and does not need sanguining.'))
+
 		easyimg.convert({src:src, dst:target, quality:quality}, (err, stdout, stderr) =>
 			if err then return fn(err)
-			fn(null, target)
+			fn(null, src, target)
 		)
 	
 	_optimizeFile: (src, target, colors, embelish, fn) =>
 		if embelish then target = @_createFilename(target, '-' + colors + 'c')
+
+		unless @_fileIsNew(src, target)
+			return fn(new Error('File is not modified and does not need sanguining.'))
+
 		@_duplicateFile(src, target, (err) =>
 			if err then return fn(err)
 			child = exec('pngquant --ext .png --force --speed 1 --verbose ' + colors + ' ' + target, (err, stdout, stderr) =>
 				if err? then fn(err)
-				fn(null, target)
+				fn(null, src, target)
 			)
 		)
 	
+	_fileIsNew: (src, target) =>
+		unless fs.existsSync(target) then return true
+		srcStats = fs.statSync(src)
+		targetStats = fs.statSync(target)
+		if srcStats.mtime.valueOf() is targetStats.mtime.valueOf()
+			return false
+		return true
+
+	_syncTime: (src, target) =>
+		stats = fs.statSync(src)
+		fs.utimesSync(target, stats.atime, stats.mtime)
+
 	_createFilename: (target, tag) =>
 		@retinaTagRegexp.lastIndex = 0
 		match = @retinaTagRegexp.exec(target)
@@ -162,7 +188,10 @@ module.exports = class sanguine
 			rs = fs.createReadStream(src)
 			ws = fs.createWriteStream(target)
 			rs.pipe(ws)
-			rs.once('end', fn)
+			rs.once('end', (err) =>
+				if err then fn(err)
+				fn()
+			)
 		)
 	
 	_deleteFile: (target, fn) =>
