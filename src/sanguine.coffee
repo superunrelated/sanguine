@@ -72,6 +72,7 @@ module.exports = class sanguine
 			)
 
 			@_generate()
+			@_cleanup()
 		)
 
 	_generate: () =>
@@ -104,7 +105,6 @@ module.exports = class sanguine
 			fileColors = set.colors
 			fileJpg = set.jpg
 
-		@filecount += fileColors.length + fileJpg.length
 		if fileColors.length > 0
 			_.each(fileColors, (color) =>
 				@_optimizeFile(src, fileTarget, color, fileColors.length > 1 || set.embelish, @_fileParsed)
@@ -116,12 +116,7 @@ module.exports = class sanguine
 			)
 
 	_fileParsed: (err, src, target) =>
-		@filecount--
-		if @filecount is 0
-			@_cleanup()
-
 		if err then return #log(err)
-
 		log('Created: ' + target)
 
 	_cleanup: ()=>
