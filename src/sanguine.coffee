@@ -6,7 +6,6 @@ util = require('util')
 _ = require('underscore')
 exec = require('child_process').exec
 easyimg = require('easyimage')
-im = require('node-imagemagick')
 {log, trace} = console
 
 CONFIG = '/sanguine.json'
@@ -134,16 +133,14 @@ module.exports = class sanguine
 		arr
 	
 	_unretinaFile: (src, target, fn) =>
-		im.identify(src, (err, imageData) =>
-			if err then throw err
-			tw = parseInt(imageData.width * 0.5)
-			th = parseInt(imageData.height * 0.5)
-			log('Shot at ', src, imageData.width, imageData.height)
-
-			im.convert([src, '-resize', tw+'x'+th, target], (err, stdout) =>
-				if err then throw err
-				return fn(null, src, stdout)
-			)
+		easyimg.info(src, (err, stdout, stderr) =>
+			if (err) then throw err
+			tw = parseInt(stdout.width * 0.5)
+			th = parseInt(stdout.height * 0.5)
+			easyimg.resize({src:src, dst:target, width:tw, height:th}, (err, image) =>
+				if err then return fn(err)
+				return fn(null, src, image)
+				)
 		)
 	
 	_jpgFile: (src, target, quality, embelish, fn) =>
@@ -154,16 +151,10 @@ module.exports = class sanguine
 			@existCount++
 			return fn(new Error('File exists:', target))
 
-		im.convert([src, '-quality', quality, target], (err, stdout) =>
-			if err then return fn(err)
-			return fn(null, src, stdout)
-		)
-		##
 		easyimg.convert({src:src, dst:target, quality:quality}, (err, stdout, stderr) =>
 			if err then return fn(err)
 			fn(null, src, target)
 		)
-		##
 	
 	_optimizeFile: (src, target, colors, embelish, fn) =>
 		if embelish then target = @_createFilename(target, '-' + colors + 'c')
@@ -202,8 +193,6 @@ module.exports = class sanguine
 			)
 			rs.once('end', (err) =>
 				if err then fn(err)
-				rs.destroy()
-				ws.destroy()
 				fn()
 			)
 	
