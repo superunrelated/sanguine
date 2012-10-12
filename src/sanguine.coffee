@@ -12,9 +12,10 @@ CONFIG = '/sanguine.json'
 
 module.exports = class sanguine
 	constructor: () ->
-		@config = null
 		@base = null
+		@images = []
 		@filecount = 0
+		@existCount = 0
 		@cleanup = []
 
 		@colorRegexp = /-(\d+)c/g
@@ -23,31 +24,32 @@ module.exports = class sanguine
 		@retinaRegexp = /-2x/g
 
 	optimize: (@configpath) ->
-		unless @configpath?
+		unless @configpath
 			@configpath = './'
+		if @configpath.indexOf(CONFIG) is -1
+			@configpath = path.join(@configpath + CONFIG)
+		@configpath = path.normalize(@configpath)
+		@base = path.dirname(@configpath)
 
-		@_loadConfig((err) =>
+		log("@configpath", @configpath)
+
+		@_loadJSON(@configpath, (err, config) =>
 			if err then return log(err)
-			@_parse()
+			@_parseConfig(config)
 		)
 		
-	_loadConfig: (fn) ->
-		if @configpath.indexOf(CONFIG) is -1
-			@configpath += CONFIG
-		@configpath = path.normalize(@configpath)
-
-		fs.readFile(@configpath, 'utf8', (err, data) =>
+	_loadJSON: (path, fn) ->
+		fs.readFile(path, 'utf8', (err, data) =>
 			if err then return fn(new Error('Failed to load sanguine.json.'))
 			try
-				@config = JSON.parse(data)
+				data = JSON.parse(data)
 			catch err
 				if err then return fn(new Error('Failed to parse sanguine.json.'))
-			@base = path.dirname(@configpath)
-			fn()
+			fn(null, data)
 		)
 
-	_parse: () =>
-		_.each(@config, (set)=>
+	_parseConfig: (config) =>
+		_.each(config, (set)=>
 			source = path.join(@base, set.source)
 			target = path.join(@base, set.target)
 			@_parseDirectory(source, target, set)
@@ -62,13 +64,27 @@ module.exports = class sanguine
 				if stats.isDirectory()
 					@_parseDirectory(src, path.join(target, file), set)
 				else if stats.isFile() and path.extname(src) is '.png'
-					unless fs.existsSync(target)
-						fs.mkdirSync(target)
-					return @_parseFile(src, target, set)
+					@images.push(
+						src: src
+						target: target
+						set: set
+					)
 			)
+
+			@_generate()
 		)
 
+	_generate: () =>
+		_.each(@images, (image) =>	
+			@_parseFile(image.src, image.target, image.set)
+		)
+
+		log(@existCount, 'files in set allready existed and was ignored.')
+
 	_parseFile: (src, target, set) =>
+		unless fs.existsSync(target)
+			fs.mkdirSync(target)
+
 		@retinaRegexp.lastIndex = 0
 		if @retinaRegexp.test(src)
 			unretinaTarget = src.replace(@retinaRegexp, '-1x')
@@ -100,19 +116,18 @@ module.exports = class sanguine
 			)
 
 	_fileParsed: (err, src, target) =>
-		if err then return log(err)
-		@_syncTime(src, target)
 		@filecount--
-		log('Created target: ' + target)
 		if @filecount is 0
 			@_cleanup()
+
+		if err then return #log(err)
+
+		log('Created: ' + target)
 
 	_cleanup: ()=>
 		if @cleanup.length > 0
 			_.each(@cleanup, (file) =>
-				@_deleteFile(file, (err) =>
-					
-				)
+				@_deleteFile(file)
 			)
 
 	_getAllRegExp: (re, str) =>
@@ -129,7 +144,6 @@ module.exports = class sanguine
 			th = parseInt(stdout.height * 0.5)
 			easyimg.resize({src:src, dst:target, width:tw, height:th}, (err, image) =>
 				if err then return fn(err)
-				@_syncTime(src, target)
 				return fn(null, src, image)
 				)
 		)
@@ -138,8 +152,9 @@ module.exports = class sanguine
 		if embelish then target = @_createFilename(target, '-' + quality + 'j')
 		target = target.replace('.png', '.jpg')
 
-		unless @_fileIsNew(src, target)
-			return fn(new Error('File is not modified and does not need sanguining.'))
+		if fs.existsSync(target)
+			@existCount++
+			return fn(new Error('File exists:', target))
 
 		easyimg.convert({src:src, dst:target, quality:quality}, (err, stdout, stderr) =>
 			if err then return fn(err)
@@ -149,8 +164,9 @@ module.exports = class sanguine
 	_optimizeFile: (src, target, colors, embelish, fn) =>
 		if embelish then target = @_createFilename(target, '-' + colors + 'c')
 
-		unless @_fileIsNew(src, target)
-			return fn(new Error('File is not modified and does not need sanguining.'))
+		if fs.existsSync(target)
+			@existCount++
+			return fn(new Error('File exists:', target))
 
 		@_duplicateFile(src, target, (err) =>
 			if err then return fn(err)
@@ -159,18 +175,6 @@ module.exports = class sanguine
 				fn(null, src, target)
 			)
 		)
-	
-	_fileIsNew: (src, target) =>
-		unless fs.existsSync(target) then return true
-		srcStats = fs.statSync(src)
-		targetStats = fs.statSync(target)
-		if srcStats.mtime.valueOf() is targetStats.mtime.valueOf()
-			return false
-		return true
-
-	_syncTime: (src, target) =>
-		stats = fs.statSync(src)
-		fs.utimesSync(target, stats.atime, stats.mtime)
 
 	_createFilename: (target, tag) =>
 		@retinaTagRegexp.lastIndex = 0
@@ -184,23 +188,21 @@ module.exports = class sanguine
 		target
 
 	_duplicateFile: (src, target, fn) =>
-		@_deleteFile(target, () =>
-			rs = fs.createReadStream(src)
-			ws = fs.createWriteStream(target)
+		@_deleteFile(target)
+		rs = fs.createReadStream(src)
+		ws = fs.createWriteStream(target)
+		if rs and ws
 			rs.pipe(ws)
+			rs.once('error', (err) =>
+				fn(err)
+			)
 			rs.once('end', (err) =>
 				if err then fn(err)
 				fn()
 			)
-		)
 	
-	_deleteFile: (target, fn) =>
-		fs.exists(target, (exists) =>
-			if exists
-				fs.unlink(target, (err) =>
-					return fn()
-				)
-			else 
-				return fn()
-		)
+	_deleteFile: (target) =>
+		if fs.existsSync(target)
+			fs.unlinkSync(target)
+
 	
