@@ -72,7 +72,7 @@ module.exports = class sanguine
 			)
 
 			@_generate()
-			@_cleanup()
+			#@_cleanup()
 		)
 
 	_generate: () =>
