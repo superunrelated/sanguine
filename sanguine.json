@@ -1,8 +1,9 @@
 [
 	{
-		"source" : "assets/",
-		"target" : "www/assets/images/",
-		"colorDefault" : 128,
-		"jpgDefault" : 60
+		"source" : "source_folder/",
+		"target" : "target_folder/",
+		"color" : 128,
+		"jpg" : 60,
+		"appendQuality" : false
 	}
 ]
