@@ -9,13 +9,13 @@
     "email": "knut@apt.no"
   },
   "dependencies": {
-    "underscore": "~1.4.1",
-    "commander": "~1.0.4",
-    "imagemagick": "~0.1.3",
-    "prettyjson": "~0.6.0"
+    "underscore": "*",
+    "commander": "*",
+    "imagemagick": "*",
+    "prettyjson": "*"
   },
   "devDependencies": {
-    "buddy": "~0.4.0"
+    "buddy": "*"
   },
   "preferGlobal": "true",
   "bin": {
@@ -24,5 +24,24 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/superunrelated/sanguine.git"
+  },
+  "buddy": {
+    "dependencies": {
+    },
+    "build": {
+      "js": {
+        "sources": [
+          "src"
+        ],
+        "targets": [
+          {
+            "input": "src",
+            "output": "lib",
+            "modular": false
+          }
+        ]
+      }
+    }
   }
 }
+

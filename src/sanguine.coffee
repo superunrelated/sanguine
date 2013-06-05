@@ -41,7 +41,7 @@ module.exports = class sanguine
 			@_parseConfig(config)
 			@_generate()
 		)
-		
+
 	_loadJSON: (path, fn) ->
 		fs.readFile(path, 'utf8', (err, data) =>
 			if err then return fn(new Error('Failed to load sanguine.json.'))
@@ -59,7 +59,7 @@ module.exports = class sanguine
 			@_parseDirectory(source, target, set)
 		)
 
-	_parseDirectory: (source, target, set) =>	
+	_parseDirectory: (source, target, set) =>
 		files = fs.readdirSync(source)
 		_.each(files, (file, key) =>
 			src = path.join(source, file)
@@ -70,7 +70,7 @@ module.exports = class sanguine
 				srcName = path.basename(src)
 				colors = @_getAllRegExp(@colorRegexp, srcName)
 				jpgs = @_getAllRegExp(@jpgRegexp, srcName)
-				if colors.length is 0 and jpgs.length is 0 
+				if colors.length is 0 and jpgs.length is 0
 					colors = set.colors
 					jpgs = set.jpg
 				@_addFiles(colors, 'c', src, target, set.appendQuality)
@@ -96,7 +96,7 @@ module.exports = class sanguine
 				# unretina:
 				@retinaRegexp.lastIndex = 0
 				if @retinaRegexp.test(path.basename(src))
-					tgt = path.join(path.dirname(tgt), path.basename(tgt).replace('-2x', '-1x'))
+					tgt = path.join(path.dirname(tgt), path.basename(tgt).replace(@retinaTagsRegexp, '$11x'))
 					@images.push(
 						src: src
 						target: tgt
@@ -109,7 +109,7 @@ module.exports = class sanguine
 	_getAllRegExp: (re, str) =>
 		re.lastIndex = 0
 		arr = []
-		while (match = re.exec(str)) 
+		while (match = re.exec(str))
 			arr.push(parseInt(match[1]))
 		arr
 
@@ -141,7 +141,7 @@ module.exports = class sanguine
 		@index++
 		if @index < @images.length
 			@_generateFile(@images[@index], @_generateNextFile)
-		else 
+		else
 			@_generateComplete()
 
 	_generateComplete: () =>
@@ -152,7 +152,7 @@ module.exports = class sanguine
 			fs.writeFileSync(reportPath, JSON.stringify(@images, null, 4))
 			log(prettyjson.render(@images))
 			console.log('Output saved to ' + reportPath + '.')
-			
+
 		log('All images created')
 
 	_generateFile: (image, fn) =>
@@ -161,7 +161,7 @@ module.exports = class sanguine
 				image.status = 'Existed. Did not create new file.' 
 				return fn(null)
 			fs.unlinkSync(image.target)
-			
+
 		targetDir = path.dirname(image.target)
 		unless fs.existsSync(targetDir)
 			fs.mkdirSync(targetDir)
@@ -174,7 +174,7 @@ module.exports = class sanguine
 				image.status = 'Created and optimized file. ' + ('[FORCED]' if @force)
 				fn(null)
 		)
-	
+
 	_optimizeFile: (image, fn) =>
 		child = exec('pngquant -ext .png -force -speed 1 -verbose ' + image.quality + ' ' + image.target, (err, stdout, stderr) =>
 			if err? then fn(err)
@@ -182,4 +182,4 @@ module.exports = class sanguine
 			fn(null)
 		)
 
-	
+
