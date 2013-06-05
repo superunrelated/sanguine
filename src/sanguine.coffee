@@ -20,12 +20,12 @@ module.exports = class sanguine
 		@existCount = 0
 		@cleanup = []
 
-		@colorRegexp = /-(\d+)c/g
-		@jpgRegexp = /-(\d+)j/g
-		@retinaTagsRegexp = /(-1x)|(-2x)/g
-		@retinaRegexp = /-2x/g
+		@colorRegexp = /(?:-|^)(\d+)c/g
+		@jpgRegexp = /(?:-|^)(\d+)j/g
+		@retinaTagsRegexp = /(?:-|^)(?:(1x)|(2x))/g
+		@retinaRegexp = /(?:-|^)2x/g
 
-	optimize: (@configpath, @report) ->
+	optimize: (@configpath, @report, @force) ->
 		@configpath
 		unless @configpath
 			@configpath = './'
@@ -157,8 +157,10 @@ module.exports = class sanguine
 
 	_generateFile: (image, fn) =>
 		if fs.existsSync(image.target)
-			image.exists = true
-			return fn(null)
+			unless @force
+				image.status = 'Existed. Did not create new file.' 
+				return fn(null)
+			fs.unlinkSync(image.target)
 			
 		targetDir = path.dirname(image.target)
 		unless fs.existsSync(targetDir)
@@ -169,12 +171,14 @@ module.exports = class sanguine
 			if image.type is 'c'
 				@_optimizeFile(image, fn)
 			else
+				image.status = 'Created and optimized file. ' + ('[FORCED]' if @force)
 				fn(null)
 		)
 	
 	_optimizeFile: (image, fn) =>
 		child = exec('pngquant -ext .png -force -speed 1 -verbose ' + image.quality + ' ' + image.target, (err, stdout, stderr) =>
 			if err? then fn(err)
+			image.status = 'Created and optimized file.' + ('[FORCED]' if @force)
 			fn(null)
 		)
 

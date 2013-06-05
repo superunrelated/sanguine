@@ -21,8 +21,12 @@ $ npm -g install sanguine
 
 ## Use
 ```bash
-$ sanguine path/to/my/project -r
+$ sanguine path/to/my/project
 ```
+
+-r creates a verbose report 
+-f forces recreation of existing files
+
 File and folder structure of the source folder will be replicated to the target folder. Files tagged in with jpg or color marker will be optimized according to the tags and copied to the target folder. Files with no tags will be optimized according to the default jpg and color settings in sanguine.json.
 
 Examples:

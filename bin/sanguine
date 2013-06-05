@@ -5,10 +5,11 @@ var sanguine = require('../lib/sanguine');
 
 program
 	.option('-r, --report', 'Save a report file to project folder', Boolean, false)
+	.option('-f, --force', 'Forced recreation of all files', Boolean, false)
 	.command('* [config]')
 	.description('Create optimized images')
 	.action(function(config){
-		new sanguine().optimize(config, program.report);
+		new sanguine().optimize(config, program.report, program.force);
 	});
 
 program.parse(process.argv);
