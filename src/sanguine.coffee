@@ -187,7 +187,8 @@ module.exports = class sanguine
 			if err
 				return log(err)
 
-			if err then fn(err)
+			if err then return fn(err)
+			
 			if image.type is TYPE_COLOR
 				@_optimizeFile(image, fn)
 			else

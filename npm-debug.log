@@ -1,0 +1,227 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.6/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.6
+4 verbose publish [ '.' ]
+5 verbose read json /Users/knut/Projects/sanguine/package.json
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /Users/knut/.npm/3a52ce78-.lock
+11 verbose read json package.json
+12 verbose tar pack [ '/var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz',
+12 verbose tar pack   '.' ]
+13 verbose tarball /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+14 verbose folder .
+15 info prepublish sanguine@0.0.6
+16 silly lockFile 3a52ce78- .
+17 verbose lock . /Users/knut/.npm/3a52ce78-.lock
+18 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+19 verbose lock /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz /Users/knut/.npm/4ff2423b-08513-0-9618220324628055-tmp-tgz.lock
+20 silly lockFile 3a52ce78- .
+21 silly lockFile 3a52ce78- .
+22 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+23 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+24 verbose tar unpack /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+25 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+26 verbose lock /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package /Users/knut/.npm/b415eb7a-08513-0-9618220324628055-package.lock
+27 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+28 verbose lock /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz /Users/knut/.npm/4ff2423b-08513-0-9618220324628055-tmp-tgz.lock
+29 silly gunzTarPerm modes [ '755', '644' ]
+30 silly gunzTarPerm extractEntry package.json
+31 silly gunzTarPerm extractEntry .npmignore
+32 silly gunzTarPerm extractEntry README.md
+33 silly gunzTarPerm extractEntry index.js
+34 silly gunzTarPerm extractEntry .buddy-filelog
+35 silly gunzTarPerm extractEntry bin/sanguine
+36 silly gunzTarPerm extractEntry example/package.json
+37 silly gunzTarPerm extractEntry example/README.md
+38 silly gunzTarPerm extractEntry example/source/flavor-2x.png
+39 silly gunzTarPerm extractEntry example/source/flavor@2x.png
+40 silly gunzTarPerm extractEntry example/target/flavor-50j-2x.jpg
+41 silly gunzTarPerm extractEntry example/target/flavor-10j-2x.jpg
+42 silly gunzTarPerm extractEntry example/target/flavor-10j@2x.jpg
+43 silly gunzTarPerm extractEntry example/target/flavor-128c-2x.png
+44 silly gunzTarPerm extractEntry example/target/flavor-128c1x.png
+45 silly gunzTarPerm extractEntry example/target/flavor-128c@2x.png
+46 silly gunzTarPerm extractEntry example/target/flavor-32c-2x.png
+47 silly gunzTarPerm extractEntry example/target/flavor-32c1x.png
+48 silly gunzTarPerm extractEntry example/target/flavor-32c@2x.png
+49 silly gunzTarPerm extractEntry example/target/flavor-40j-2x.jpg
+50 silly gunzTarPerm extractEntry example/target/flavor-40j1x.jpg
+51 silly gunzTarPerm extractEntry example/target/flavor-40j@2x.jpg
+52 silly gunzTarPerm extractEntry example/target/flavor-10j1x.jpg
+53 silly gunzTarPerm extractEntry example/target/flavor-50j1x.jpg
+54 silly gunzTarPerm extractEntry example/target/flavor-50j@2x.jpg
+55 silly gunzTarPerm extractEntry example/target/flavor-60j-2x.jpg
+56 silly gunzTarPerm extractEntry example/target/flavor-60j1x.jpg
+57 silly gunzTarPerm extractEntry example/target/flavor-60j@2x.jpg
+58 silly gunzTarPerm extractEntry example/target/flavor-64c-2x.png
+59 silly gunzTarPerm extractEntry example/target/flavor-64c1x.png
+60 silly gunzTarPerm extractEntry example/target/flavor-64c@2x.png
+61 silly gunzTarPerm extractEntry example/target/flavor-8c-2x.png
+62 silly gunzTarPerm extractEntry example/target/flavor-8c1x.png
+63 silly gunzTarPerm extractEntry example/target/flavor-8c@2x.png
+64 silly gunzTarPerm extractEntry lib/sanguine.js
+65 silly gunzTarPerm extractEntry src/sanguine.coffee
+66 verbose read json /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package/package.json
+67 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+68 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+69 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+70 silly lockFile 4ff2423b-08513-0-9618220324628055-tmp-tgz /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/tmp.tgz
+71 verbose from cache /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package/package.json
+72 verbose tar pack [ '/Users/knut/.npm/sanguine/0.0.6/package.tgz',
+72 verbose tar pack   '/var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package' ]
+73 verbose tarball /Users/knut/.npm/sanguine/0.0.6/package.tgz
+74 verbose folder /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+75 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+76 verbose lock /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package /Users/knut/.npm/b415eb7a-08513-0-9618220324628055-package.lock
+77 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+78 verbose lock /Users/knut/.npm/sanguine/0.0.6/package.tgz /Users/knut/.npm/32068b94-t-npm-sanguine-0-0-6-package-tgz.lock
+79 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+80 silly lockFile b415eb7a-08513-0-9618220324628055-package /var/folders/l8/tsytnqv107n9qck68m6l523c0000gn/T/npm-25679/1371207608513-0.9618220324628055/package
+81 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+82 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+83 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+84 verbose lock /Users/knut/.npm/sanguine/0.0.6/package /Users/knut/.npm/53323df8--knut-npm-sanguine-0-0-6-package.lock
+85 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+86 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+87 verbose tar unpack /Users/knut/.npm/sanguine/0.0.6/package.tgz
+88 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+89 verbose lock /Users/knut/.npm/sanguine/0.0.6/package /Users/knut/.npm/53323df8--knut-npm-sanguine-0-0-6-package.lock
+90 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+91 verbose lock /Users/knut/.npm/sanguine/0.0.6/package.tgz /Users/knut/.npm/32068b94-t-npm-sanguine-0-0-6-package-tgz.lock
+92 silly gunzTarPerm modes [ '755', '644' ]
+93 silly gunzTarPerm extractEntry package.json
+94 silly gunzTarPerm extractEntry .npmignore
+95 silly gunzTarPerm extractEntry README.md
+96 silly gunzTarPerm extractEntry index.js
+97 silly gunzTarPerm extractEntry .buddy-filelog
+98 silly gunzTarPerm extractEntry bin/sanguine
+99 silly gunzTarPerm extractEntry example/package.json
+100 silly gunzTarPerm extractEntry example/README.md
+101 silly gunzTarPerm extractEntry example/source/flavor-2x.png
+102 silly gunzTarPerm extractEntry example/source/flavor@2x.png
+103 silly gunzTarPerm extractEntry example/target/flavor-50j-2x.jpg
+104 silly gunzTarPerm extractEntry example/target/flavor-10j-2x.jpg
+105 silly gunzTarPerm extractEntry example/target/flavor-10j@2x.jpg
+106 silly gunzTarPerm extractEntry example/target/flavor-128c-2x.png
+107 silly gunzTarPerm extractEntry example/target/flavor-128c1x.png
+108 silly gunzTarPerm extractEntry example/target/flavor-128c@2x.png
+109 silly gunzTarPerm extractEntry example/target/flavor-32c-2x.png
+110 silly gunzTarPerm extractEntry example/target/flavor-32c1x.png
+111 silly gunzTarPerm extractEntry example/target/flavor-32c@2x.png
+112 silly gunzTarPerm extractEntry example/target/flavor-40j-2x.jpg
+113 silly gunzTarPerm extractEntry example/target/flavor-40j1x.jpg
+114 silly gunzTarPerm extractEntry example/target/flavor-40j@2x.jpg
+115 silly gunzTarPerm extractEntry example/target/flavor-10j1x.jpg
+116 silly gunzTarPerm extractEntry example/target/flavor-50j1x.jpg
+117 silly gunzTarPerm extractEntry example/target/flavor-50j@2x.jpg
+118 silly gunzTarPerm extractEntry example/target/flavor-60j-2x.jpg
+119 silly gunzTarPerm extractEntry example/target/flavor-60j1x.jpg
+120 silly gunzTarPerm extractEntry example/target/flavor-60j@2x.jpg
+121 silly gunzTarPerm extractEntry example/target/flavor-64c-2x.png
+122 silly gunzTarPerm extractEntry example/target/flavor-64c1x.png
+123 silly gunzTarPerm extractEntry example/target/flavor-64c@2x.png
+124 silly gunzTarPerm extractEntry example/target/flavor-8c-2x.png
+125 silly gunzTarPerm extractEntry example/target/flavor-8c1x.png
+126 silly gunzTarPerm extractEntry example/target/flavor-8c@2x.png
+127 silly gunzTarPerm extractEntry lib/sanguine.js
+128 silly gunzTarPerm extractEntry src/sanguine.coffee
+129 verbose read json /Users/knut/.npm/sanguine/0.0.6/package/package.json
+130 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+131 silly lockFile 53323df8--knut-npm-sanguine-0-0-6-package /Users/knut/.npm/sanguine/0.0.6/package
+132 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+133 silly lockFile 32068b94-t-npm-sanguine-0-0-6-package-tgz /Users/knut/.npm/sanguine/0.0.6/package.tgz
+134 silly shasum updated bytes 65536
+135 silly shasum updated bytes 65536
+136 silly shasum updated bytes 65536
+137 silly shasum updated bytes 65536
+138 silly shasum updated bytes 65536
+139 silly shasum updated bytes 65536
+140 silly shasum updated bytes 65536
+141 silly shasum updated bytes 65536
+142 silly shasum updated bytes 65536
+143 silly shasum updated bytes 65536
+144 silly shasum updated bytes 65536
+145 silly shasum updated bytes 65536
+146 silly shasum updated bytes 65536
+147 silly shasum updated bytes 65536
+148 silly shasum updated bytes 65536
+149 silly shasum updated bytes 65536
+150 silly shasum updated bytes 65536
+151 silly shasum updated bytes 65536
+152 silly shasum updated bytes 65536
+153 silly shasum updated bytes 65536
+154 silly shasum updated bytes 57219
+155 info shasum 1f4fa983c6293ca5309558bf05b4f37dc709cfe7
+155 info shasum /Users/knut/.npm/sanguine/0.0.6/package.tgz
+156 verbose from cache /Users/knut/.npm/sanguine/0.0.6/package/package.json
+157 verbose chmod /Users/knut/.npm/sanguine/0.0.6/package.tgz 644
+158 verbose chown /Users/knut/.npm/sanguine/0.0.6/package.tgz [ 501, 20 ]
+159 silly lockFile 3a52ce78- .
+160 silly publish { name: 'sanguine',
+160 silly publish   description: 'An image build system for creating optimized png\'s, jpg\'s for normal and retina screens.',
+160 silly publish   version: '0.0.6',
+160 silly publish   private: false,
+160 silly publish   main: './index',
+160 silly publish   author: { name: 'Knut Skaala', email: 'knut@apt.no' },
+160 silly publish   dependencies:
+160 silly publish    { underscore: '*',
+160 silly publish      commander: '1.2.0',
+160 silly publish      imagemagick: '*',
+160 silly publish      'fs-extra': '~0.6.1' },
+160 silly publish   devDependencies: { buddy: '*' },
+160 silly publish   preferGlobal: 'true',
+160 silly publish   bin: { sanguine: './bin/sanguine' },
+160 silly publish   scripts: { test: 'bin/sanguine example -frl' },
+160 silly publish   repository:
+160 silly publish    { type: 'git',
+160 silly publish      url: 'git://github.com/superunrelated/sanguine.git' },
+160 silly publish   buddy: { dependencies: {}, build: { js: [Object] } },
+160 silly publish   readme: '# Sanguine\n\nAn image build system for creating optimized png\'s, jpg\'s for normal and retina screens. Fast.\n\n## Installation\n\nInstall imagemagick\n```bash\n$ brew install imagemagick\n```\n\nInstall pngquant\n```url\nhttp://www.libpng.org/pub/png/apps/pngquant.html\n```\n\nThen\n```bash\n$ npm -g install sanguine\n```\n\n## Use\n```bash\n$ sanguine [options] path/to/my/project\n\nOptions:\n\n-h, --help    output usage information\n-r, --report  save a report file to project folder\n-f, --force   forced recreation of all files\n-l, --log     logs progress during creation\n```\n\nFile and folder structure of the source folder will be replicated to the target folder. Files tagged in with jpg or color marker will be optimized according to the tags and copied to the target folder. Files with no tags will be optimized according to the default jpg and color settings in sanguine.json.\n\nExamples:\n- Source images named "@x2" will be scaled down 50% and named "@1x".\n- Source images named "@16c" will be redused to 16 color png.\n- Source images named "@60j" will be compressed to a 60% quality jpg.\n- Images with multiple tags like "gradient@60j@128c@2x.png" result in six files, all with different color/quality settings and image sizes.\'\n\n### Configuration\nAdd a sanguine node to the package.json file of your project. \n\n```json\n{\n\t"sanguine": [\n\t\t{\n\t\t\t"source" : "source/",\n\t\t\t"target" : "target/",\n\t\t\t"colors" : [128, 64, 32, 8],\n\t\t\t"jpgs" : [60, 50, 40, 10],\n\t\t\t"appendQuality" : true\n\t\t}\n\t]\n}\n```',
+160 silly publish   readmeFilename: 'README.md',
+160 silly publish   _id: 'sanguine@0.0.6',
+160 silly publish   dist: { shasum: '1f4fa983c6293ca5309558bf05b4f37dc709cfe7' },
+160 silly publish   _from: '.' }
+161 verbose url raw sanguine
+162 verbose url resolving [ 'https://registry.npmjs.org/', './sanguine' ]
+163 verbose url resolved https://registry.npmjs.org/sanguine
+164 info trying registry request attempt 1 at 13:00:21
+165 http PUT https://registry.npmjs.org/sanguine
+166 http 409 https://registry.npmjs.org/sanguine
+167 verbose url raw sanguine
+168 verbose url resolving [ 'https://registry.npmjs.org/', './sanguine' ]
+169 verbose url resolved https://registry.npmjs.org/sanguine
+170 info trying registry request attempt 1 at 13:00:22
+171 http GET https://registry.npmjs.org/sanguine
+172 http 200 https://registry.npmjs.org/sanguine
+173 error publish fail Cannot publish over existing version.
+173 error publish fail Update the 'version' field in package.json and try again.
+173 error publish fail
+173 error publish fail If the previous version was published in error, see:
+173 error publish fail     npm help unpublish
+173 error publish fail
+173 error publish fail To automatically increment version numbers, see:
+173 error publish fail     npm help version
+174 error System Darwin 12.3.0
+175 error command "/usr/local/Cellar/node/0.10.6/bin/node" "/usr/local/bin/npm" "publish"
+176 error cwd /Users/knut/Projects/sanguine
+177 error node -v v0.10.6
+178 error npm -v 1.2.18
+179 error code EPUBLISHCONFLICT
+180 verbose exit [ 1, true ]
