@@ -34,7 +34,7 @@ Options:
 File and folder structure of the source folder will be replicated to the target folder. Files tagged in with jpg or color marker will be optimized according to the tags and copied to the target folder. Files with no tags will be optimized according to the default jpg and color settings in sanguine.json.
 
 Examples:
-- Source images named "@x2" will be scaled down 50% and named "@1x".
+- Source images named "@2x" will be scaled down 50% and "@2x" will be removed.
 - Source images named "@16c" will be redused to 16 color png.
 - Source images named "@60j" will be compressed to a 60% quality jpg.
 - Images with multiple tags like "gradient@60j@128c@2x.png" result in six files, all with different color/quality settings and image sizes.'
@@ -43,14 +43,18 @@ Examples:
 Add a sanguine node to the package.json file of your project. 
 
 ```json
-{
+{  
+	"scripts":{
+    "test" : "./../bin/sanguine ./ -frl" 
+  },
 	"sanguine": [
 		{
 			"source" : "source/",
 			"target" : "target/",
 			"colors" : [128, 64, 32, 8],
 			"jpgs" : [60, 50, 40, 10],
-			"appendQuality" : true
+			"appendQuality" : true,
+			"append1x" : false
 		}
 	]
 }

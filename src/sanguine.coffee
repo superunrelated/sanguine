@@ -24,7 +24,7 @@ module.exports = class sanguine
 
 		@colorRegexp = /(?:-|@|^)(\d+)c/g
 		@jpgRegexp = /(?:-|@|^)(\d+)j/g
-		@retinaTagsRegexp = /(?:-|@|^)(?:(1x)|(2x))/g
+		@retinaTagsRegexp = /(?:(-|@|^))(?:(1x)|(2x))/g
 		@retinaRegexp = /(?:-|@|^)2x/g
 
 	optimize: (@configpath, @report, @force, @logtoconsole) ->
@@ -75,16 +75,16 @@ module.exports = class sanguine
 				if colors.length is 0 
 					colors = set.colors
 				if colors
-					@_addFiles(colors, TYPE_COLOR, src, target, set.appendQuality)
+					@_addFiles(colors, TYPE_COLOR, src, target, set)
 
 				jpgs = @_getAllRegExp(@jpgRegexp, srcName)
 				if jpgs.length is 0
 					jpgs = set.jpgs
 				if jpgs
-					@_addFiles(jpgs, TYPE_JPG, src, target, set.appendQuality)
+					@_addFiles(jpgs, TYPE_JPG, src, target, set)
 		)
 
-	_addFiles: (versions, type, src, target, appendQuality) =>
+	_addFiles: (versions, type, src, target, set) =>
 		if versions
 			unless util.isArray(versions)
 				versions = [versions]
@@ -94,9 +94,9 @@ module.exports = class sanguine
 
 			_.each(versions, (quality) =>
 				tag = ''
-				if versions.length > 1 || appendQuality
+				if versions.length > 1 || set.appendQuality
 					tag = '-' + quality + type
-				tgt = @_getTargetName(src, target, tag)
+				tgt = @_getTargetName(src, target, tag, set)
 				if type is TYPE_JPG
 					tgt = tgt.replace('.png', '.jpg')
 				@images.push(
@@ -109,7 +109,13 @@ module.exports = class sanguine
 				# unretina:
 				@retinaRegexp.lastIndex = 0
 				if @retinaRegexp.test(path.basename(src))
-					tgt = path.join(path.dirname(tgt), path.basename(tgt).replace(@retinaTagsRegexp, '$11x'))
+					tgt = path.join(
+						path.dirname(tgt), 
+						path.basename(tgt).replace(
+							@retinaTagsRegexp, 
+							if set.append1x then '$11x' else ''
+						)
+					)
 					@images.push(
 						src: src
 						target: tgt
@@ -126,7 +132,7 @@ module.exports = class sanguine
 			versions.push(parseInt(match[1]))
 		versions
 
-	_getTargetName: (src, target, tag) =>
+	_getTargetName: (src, target, tag, set) =>
 		name = path.basename(src)
 		name = name.replace(@colorRegexp, '')
 		name = name.replace(@jpgRegexp, '')
@@ -134,12 +140,10 @@ module.exports = class sanguine
 		if tag?
 			@retinaTagsRegexp.lastIndex = 0
 			match = @retinaTagsRegexp.exec(name)
-			if match?
-				type = match[0]
-				name = name.replace(type, tag + type)
+			if match? 
+				name = name.replace(type, tag + match[0])
 			else
 				name = name.replace('.', tag + '.')
-
 		path.join(target, name)
 
 	# GENERATION:
