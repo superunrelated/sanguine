@@ -40,7 +40,7 @@ Examples:
 - Images with multiple tags like "gradient@60j@128c@2x.png" result in six files, all with different color/quality settings and image sizes.'
 
 ### Configuration
-Add a sanguine node to the package.json file of your project. Build sources and targets are defined in a "sanguine.json" config file that should be located in the root of your project directory.
+Add a sanguine node to the package.json file of your project. 
 
 ```json
 {
