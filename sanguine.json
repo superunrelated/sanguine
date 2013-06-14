@@ -1,9 +1,0 @@
-[
-	{
-		"source" : "source_folder/",
-		"target" : "target_folder/",
-		"color" : 128,
-		"jpg" : 60,
-		"appendQuality" : false
-	}
-]

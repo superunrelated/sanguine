@@ -1,29 +1,32 @@
 #!/usr/bin/env node
 
-fs = require('fs')
+fs = require('fs-extra')
 path = require('path')
 util = require('util')
 _ = require('underscore')
 exec = require('child_process').exec
 imagemagick = require('imagemagick')
-prettyjson = require('prettyjson')
 {log, trace} = console
 
-CONFIG = '/sanguine.json'
+CONFIG = '/package.json'
 OUTPUT = '/sanguine_report.json'
+
+TYPE_JPG = 'j'
+TYPE_COLOR = 'c'
 
 module.exports = class sanguine
 	constructor: () ->
+
 		@base = null
 		@images = []
 		@filecount = 0
 		@existCount = 0
 		@cleanup = []
 
-		@colorRegexp = /(?:-|^)(\d+)c/g
-		@jpgRegexp = /(?:-|^)(\d+)j/g
-		@retinaTagsRegexp = /(?:-|^)(?:(1x)|(2x))/g
-		@retinaRegexp = /(?:-|^)2x/g
+		@colorRegexp = /(?:-|@|^)(\d+)c/g
+		@jpgRegexp = /(?:-|@|^)(\d+)j/g
+		@retinaTagsRegexp = /(?:-|@|^)(?:(1x)|(2x))/g
+		@retinaRegexp = /(?:-|@|^)2x/g
 
 	optimize: (@configpath, @report, @force) ->
 		@configpath
@@ -44,12 +47,12 @@ module.exports = class sanguine
 
 	_loadJSON: (path, fn) ->
 		fs.readFile(path, 'utf8', (err, data) =>
-			if err then return fn(new Error('Failed to load sanguine.json.'))
+			if err then return fn(new Error('Failed to load:' + CONFIG))
 			try
 				data = JSON.parse(data)
 			catch err
-				if err then return fn(new Error('Failed to parse sanguine.json.'))
-			fn(null, data)
+				if err then return fn(new Error('Failed to parse:' + CONFIG))
+			fn(null, data.sanguine)
 		)
 
 	_parseConfig: (config) =>
@@ -68,23 +71,34 @@ module.exports = class sanguine
 				@_parseDirectory(src, path.join(target, file), set)
 			else if stats.isFile() and path.extname(src) is '.png'
 				srcName = path.basename(src)
+				
 				colors = @_getAllRegExp(@colorRegexp, srcName)
-				jpgs = @_getAllRegExp(@jpgRegexp, srcName)
-				if colors.length is 0 and jpgs.length is 0
+				if colors.length is 0 
 					colors = set.colors
-					jpgs = set.jpg
-				@_addFiles(colors, 'c', src, target, set.appendQuality)
-				@_addFiles(jpgs, 'j', src, target, set.appendQuality)
+				if colors
+					@_addFiles(colors, TYPE_COLOR, src, target, set.appendQuality)
+
+				jpgs = @_getAllRegExp(@jpgRegexp, srcName)
+				if jpgs.length is 0
+					jpgs = set.jpgs
+				if jpgs
+					@_addFiles(jpgs, TYPE_JPG, src, target, set.appendQuality)
 		)
 
-	_addFiles: (arr, type, src, target, appendQuality) =>
-		if arr.length > 0
-			_.each(arr, (quality) =>
+	_addFiles: (versions, type, src, target, appendQuality) =>
+		if versions
+			unless util.isArray(versions)
+				versions = [versions]
+
+			unless fs.existsSync(target)
+				fs.mkdirsSync(target)
+
+			_.each(versions, (quality) =>
 				tag = ''
-				if arr.length > 1 || appendQuality
+				if versions.length > 1 || appendQuality
 					tag = '-' + quality + type
 				tgt = @_getTargetName(src, target, tag)
-				if type is 'j'
+				if type is TYPE_JPG
 					tgt = tgt.replace('.png', '.jpg')
 				@images.push(
 					src: src
@@ -108,10 +122,10 @@ module.exports = class sanguine
 
 	_getAllRegExp: (re, str) =>
 		re.lastIndex = 0
-		arr = []
+		versions = []
 		while (match = re.exec(str))
-			arr.push(parseInt(match[1]))
-		arr
+			versions.push(parseInt(match[1]))
+		versions
 
 	_getTargetName: (src, target, tag) =>
 		name = path.basename(src)
@@ -150,10 +164,8 @@ module.exports = class sanguine
 			if fs.existsSync(reportPath)
 				fs.unlinkSync(reportPath)
 			fs.writeFileSync(reportPath, JSON.stringify(@images, null, 4))
-			log(prettyjson.render(@images))
+			log((@images) JSON.stringify(@images, null, 2))
 			console.log('Output saved to ' + reportPath + '.')
-
-		log('All images created')
 
 	_generateFile: (image, fn) =>
 		if fs.existsSync(image.target)
@@ -166,9 +178,16 @@ module.exports = class sanguine
 		unless fs.existsSync(targetDir)
 			fs.mkdirSync(targetDir)
 
-		imagemagick.convert([image.src, '-resize', image.scale, image.target], (err, stdout) =>
+		params = [image.src, '-resize', image.scale]
+		if image.type is TYPE_JPG
+			params.push('-quality', image.quality)
+		params.push(image.target)
+		imagemagick.convert(params, (err, stdout) =>
+			if err
+				return log(err)
+
 			if err then fn(err)
-			if image.type is 'c'
+			if image.type is TYPE_COLOR
 				@_optimizeFile(image, fn)
 			else
 				image.status = 'Created and optimized file. ' + ('[FORCED]' if @force)

@@ -1,0 +1,11 @@
+{
+	"sanguine": [
+		{
+			"source" : "source/",
+			"target" : "target/",
+			"colors" : [128, 64, 32, 8],
+			"jpgs" : [60, 50, 40, 10],
+			"appendQuality" : true
+		}
+	]
+}

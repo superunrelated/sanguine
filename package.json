@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "underscore": "*",
-    "commander": "*",
+    "commander": "1.2.0",
     "imagemagick": "*",
-    "prettyjson": "*"
+    "fs-extra": "~0.6.1"
   },
   "devDependencies": {
     "buddy": "*"
@@ -26,8 +26,7 @@
     "url": "git://github.com/superunrelated/sanguine.git"
   },
   "buddy": {
-    "dependencies": {
-    },
+    "dependencies": {},
     "build": {
       "js": {
         "sources": [
@@ -44,4 +43,3 @@
     }
   }
 }
-
