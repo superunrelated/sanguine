@@ -22,7 +22,7 @@
     "sanguine": "./bin/sanguine"
   },
   "scripts":{
-    "test" : "bin/sanguine tests -frl" 
+    "test" : "bin/sanguine example -frl" 
   },
   "repository": {
     "type": "git",
