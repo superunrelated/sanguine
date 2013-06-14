@@ -4,12 +4,13 @@ var program = require('commander');
 var sanguine = require('../lib/sanguine');
 
 program
-	.option('-r, --report', 'Save a report file to project folder', Boolean, false)
-	.option('-f, --force', 'Forced recreation of all files', Boolean, false)
+	.option('-r, --report', 'save a report file to project folder', Boolean, false)
+	.option('-f, --force', 'forced recreation of all files', Boolean, false)
+	.option('-l, --log', 'logs progress during creation', Boolean, false)
 	.command('* [config]')
 	.description('Create optimized images')
 	.action(function(config){
-		new sanguine().optimize(config, program.report, program.force);
+		new sanguine().optimize(config, program.report, program.force, program.log);
 	});
 
 program.parse(process.argv);

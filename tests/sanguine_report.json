@@ -1,0 +1,258 @@
+[
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-128c-2x.png",
+        "scale": "100%",
+        "quality": 128,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-128c1x.png",
+        "scale": "50%",
+        "quality": 128,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-64c-2x.png",
+        "scale": "100%",
+        "quality": 64,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-64c1x.png",
+        "scale": "50%",
+        "quality": 64,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-32c-2x.png",
+        "scale": "100%",
+        "quality": 32,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-32c1x.png",
+        "scale": "50%",
+        "quality": 32,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-8c-2x.png",
+        "scale": "100%",
+        "quality": 8,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-8c1x.png",
+        "scale": "50%",
+        "quality": 8,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-60j-2x.jpg",
+        "scale": "100%",
+        "quality": 60,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-60j1x.jpg",
+        "scale": "50%",
+        "quality": 60,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-50j-2x.jpg",
+        "scale": "100%",
+        "quality": 50,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-50j1x.jpg",
+        "scale": "50%",
+        "quality": 50,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-40j-2x.jpg",
+        "scale": "100%",
+        "quality": 40,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-40j1x.jpg",
+        "scale": "50%",
+        "quality": 40,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-10j-2x.jpg",
+        "scale": "100%",
+        "quality": 10,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor-2x.png",
+        "target": "tests/target/flavor-10j1x.jpg",
+        "scale": "50%",
+        "quality": 10,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-128c@2x.png",
+        "scale": "100%",
+        "quality": 128,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-128c1x.png",
+        "scale": "50%",
+        "quality": 128,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-64c@2x.png",
+        "scale": "100%",
+        "quality": 64,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-64c1x.png",
+        "scale": "50%",
+        "quality": 64,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-32c@2x.png",
+        "scale": "100%",
+        "quality": 32,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-32c1x.png",
+        "scale": "50%",
+        "quality": 32,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-8c@2x.png",
+        "scale": "100%",
+        "quality": 8,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-8c1x.png",
+        "scale": "50%",
+        "quality": 8,
+        "type": "c",
+        "status": "Created and optimized file.[FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-60j@2x.jpg",
+        "scale": "100%",
+        "quality": 60,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-60j1x.jpg",
+        "scale": "50%",
+        "quality": 60,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-50j@2x.jpg",
+        "scale": "100%",
+        "quality": 50,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-50j1x.jpg",
+        "scale": "50%",
+        "quality": 50,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-40j@2x.jpg",
+        "scale": "100%",
+        "quality": 40,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-40j1x.jpg",
+        "scale": "50%",
+        "quality": 40,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-10j@2x.jpg",
+        "scale": "100%",
+        "quality": 10,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    },
+    {
+        "src": "tests/source/flavor@2x.png",
+        "target": "tests/target/flavor-10j1x.jpg",
+        "scale": "50%",
+        "quality": 10,
+        "type": "j",
+        "status": "Created and optimized file. [FORCED]"
+    }
+]

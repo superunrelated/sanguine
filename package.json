@@ -21,6 +21,9 @@
   "bin": {
     "sanguine": "./bin/sanguine"
   },
+  "scripts":{
+    "test" : "bin/sanguine tests -frl" 
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/superunrelated/sanguine.git"

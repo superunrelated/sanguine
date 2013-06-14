@@ -16,7 +16,6 @@ TYPE_COLOR = 'c'
 
 module.exports = class sanguine
 	constructor: () ->
-
 		@base = null
 		@images = []
 		@filecount = 0
@@ -28,7 +27,7 @@ module.exports = class sanguine
 		@retinaTagsRegexp = /(?:-|@|^)(?:(1x)|(2x))/g
 		@retinaRegexp = /(?:-|@|^)2x/g
 
-	optimize: (@configpath, @report, @force) ->
+	optimize: (@configpath, @report, @force, @logtoconsole) ->
 		@configpath
 		unless @configpath
 			@configpath = './'
@@ -164,13 +163,15 @@ module.exports = class sanguine
 			if fs.existsSync(reportPath)
 				fs.unlinkSync(reportPath)
 			fs.writeFileSync(reportPath, JSON.stringify(@images, null, 4))
-			log((@images) JSON.stringify(@images, null, 2))
+			log(JSON.stringify(@images, null, 2))
 			console.log('Output saved to ' + reportPath + '.')
 
 	_generateFile: (image, fn) =>
 		if fs.existsSync(image.target)
 			unless @force
-				image.status = 'Existed. Did not create new file.' 
+				image.status = 'File exists. Use -f to force recreation.' 
+				if @logtoconsole
+					log(image.target, image.status)
 				return fn(null)
 			fs.unlinkSync(image.target)
 
@@ -191,6 +192,8 @@ module.exports = class sanguine
 				@_optimizeFile(image, fn)
 			else
 				image.status = 'Created and optimized file. ' + ('[FORCED]' if @force)
+				if @logtoconsole
+					log(image.target, image.status)
 				fn(null)
 		)
 
@@ -198,6 +201,8 @@ module.exports = class sanguine
 		child = exec('pngquant -ext .png -force -speed 1 -verbose ' + image.quality + ' ' + image.target, (err, stdout, stderr) =>
 			if err? then fn(err)
 			image.status = 'Created and optimized file.' + ('[FORCED]' if @force)
+			if @logtoconsole
+					log(image.target, image.status)
 			fn(null)
 		)
 
