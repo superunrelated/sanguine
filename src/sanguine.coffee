@@ -96,7 +96,7 @@ module.exports = class sanguine
 				tag = ''
 				if versions.length > 1 || set.appendQuality
 					tag = '-' + quality + type
-				tgt = @_getTargetName(src, target, tag, set)
+				tgt = @_getTargetName(src, target, tag, set, type)
 				if type is TYPE_JPG
 					tgt = tgt.replace('.png', '.jpg')
 				@images.push(
@@ -132,7 +132,7 @@ module.exports = class sanguine
 			versions.push(parseInt(match[1]))
 		versions
 
-	_getTargetName: (src, target, tag, set) =>
+	_getTargetName: (src, target, tag, set, type) =>
 		name = path.basename(src)
 		name = name.replace(@colorRegexp, '')
 		name = name.replace(@jpgRegexp, '')
